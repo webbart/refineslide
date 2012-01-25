@@ -1,0 +1,365 @@
+<!doctype html>
+<!--[if IE 7]><html class="no-js lt-ie9 lt-ie8" lang="en"><![endif]-->
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en"><![endif]-->
+<!--[if gt IE 8]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+
+	<title>RefineSlide</title>
+
+	<link rel="stylesheet" href="assets/css/reset.css" />
+	<link rel="stylesheet" href="assets/css/main.css" />
+	<link rel="stylesheet" href="assets/css/refineslide.css" />
+	<link rel="stylesheet" href="assets/css/refineslide-theme-dark.css" />
+
+	<link rel="stylesheet" href="assets/css/shCore.css" />
+	<link rel="stylesheet" href="assets/css/shThemeDefault.css" />
+
+    <script src="http://use.typekit.com/tbq4amo.js"></script>
+    <script>try{Typekit.load();}catch(e){}</script>
+
+    <script src="assets/js/modernizr.js"></script>
+
+    <!--[if lt IE 9]>
+        <script src="assets/js/respond.min.js"></script>
+	<![endif]-->
+</head>
+<body>
+	<div class="topline"></div>
+
+	<div class="wrap group">
+        <div class="group">
+
+            <h1 class="title"><a href="/refineslide/">RefineSlide</a></h1>
+
+            <div id="top-buttons" class="group">
+                <a id="download" href="https://github.com/alexdunphy/refineslide/zipball/master">Download</a>
+                <a id="github" href="https://github.com/alexdunphy/refineslide">Github</a>
+            </div>
+        </div>
+    </div>
+
+    <div class="group section-wrap upper" id="upper">
+        <div class="wrap group">
+            <div class="section-1">
+                <h2 class="subtitle">Features</h2>
+                <ul class="checklist group">
+                    <li><a href="/refineslide/demo.html" class="button">A few transitions</a> to play with</li>
+                    <li><a href="http://www.abookapart.com/products/responsive-web-design" class="button">Responsive</a> down to mobile scale</li>
+                    <li>CSS transition & <a href="http://www.webkit.org/blog/386/3d-transforms/" class="button">3D transform</a> support</li>
+                    <li>Javascript fallback fade transition</li>
+                    <li>Auto-formatted, responsive thumbnails</li>
+                    <li>Good browser support (IE7+)</li>
+                    <li>HTML captions</li>
+                    <li><a href="http://www.html5rocks.com/en/tutorials/speed/html5/#toc-hardware-accell" class="button">Hardware acceleration</a> on supported browsers</li>
+                    <li><a href="http://www.opensource.org/licenses/mit-license.php" class="button">Free to use</a> and abuse as you like</li>
+                    <li>Simple, semantic markup</li>
+                    <li>Lightweight: 12k minified (4k gzipped)</li>
+                </ul>
+            </div> <!-- /.section-1 -->
+
+            <div class="section-2 group">
+                <ul id="images" class="rs-slider">
+                    <li class="group">
+                        <a href="#">
+                            <img src="assets/img/wood6.jpg" alt="" />
+                        </a>
+                        <div class="rs-caption rs-bottom">
+                            <h3>Caption Area</h3>
+                            <p>Wood texture by <a href="http://downloads.dvq.co.nz/" class="button">Matthew Skiles.</a></p>
+                        </div>
+                    </li>
+                    <li class="group">
+                        <a href="#">
+                            <img src="assets/img/greenbut.jpg" alt=""/>
+                        </a>
+                        <div class="rs-caption rs-top-right">
+                            <p>This image is wrapped in a link.</p>
+                        </div>
+                    </li>
+                    <li class="group">
+                        <img src="assets/img/form.jpg" alt=""/>
+                        <div class="rs-caption rs-bottom-right">
+                            <p>Adapted from <a class="button" href="http://dribbble.com/shots/154205-Cool-Green-Signup-form">Glenn Van Bogaert</a></p>
+                        </div>
+                    </li>
+                    <li class="group"><img src="assets/img/red.jpg" alt=""/>
+                    </li>
+                    <li class="group"><img src="assets/img/6.jpg" alt=""/></li>
+                </ul>
+            </div> <!-- /.section-2 -->
+        </div> <!-- /.wrap -->
+    </div> <!-- /#upper -->
+
+    <div class="wrap group">
+        <div class="group section-wrap" style="padding-bottom:8px;">
+            <nav id="nav">
+                <ul class="group">
+                    <li><a href="#installation">Installation<br />
+                        <span>- Essential steps -</span>
+                    </a></li>
+                    <li class="nav-2"><a href="#tuning">Tuning<br />
+                        <span>- Nitty-gritty setup -</span>
+                    </a></li>
+                    <li class="nav-3"><a href="#faq">FAQ<br />
+                        <span>- Shooting trouble -</span>
+                    </a></li>
+                    <li class="nav-4"><a href="#about">About<br />
+                        <span>- This and that -</span>
+                    </a></li>
+                </ul>
+            </nav>
+
+            <ul id="pages">
+                <li id="_installation">
+                    <h2 class="subtitle">Installation <span>Essential steps</span></h2>
+                    <ol>
+                        <li>
+                            <h4>Link CSS</h4>
+                            <p>Move the slider CSS file to your server and link to it in the <code>&lt;head&gt;</code> section of your document.</p>
+                            <pre class="brush: html">
+&lt;link rel="stylesheet" href="refineslide.css" /&gt;
+                            </pre>
+                            <p>(This is just for the base CSS rules. You'll also want to include some styling to make the slider look good - check out the 'dark theme' stylesheet in the download as an example.)</p>
+                        </li>
+
+                        <li>
+                            <h4>Link JS</h4>
+                            <p>Move the slider JS file to your server and link to it before the closing <code>&lt;body&gt;</code> tag.<br />
+                            Please note that you must include jQuery (<strong>v1.7 or later</strong>) before the slider JS file.</p>
+                            <pre class="brush: html">
+&lt;script src="jquery-1.7.1.min.js"&gt;&lt;/script&gt;
+&lt;script src="jquery.refineslide.min.js"&gt;&lt;/script&gt;
+                            </pre>
+                        </li>
+
+                        <li>
+                            <h4>Markup</h4>
+                            <p>Add a dash of markup to your document following the pattern below. (Images should be the same size as one another.)</p>
+                            <pre class="brush: html">
+&lt;ul class="rs-slider"&gt;
+    &lt;li&gt;&lt;img src="img1.jpg" alt="" /&gt;&lt;/li&gt;
+    &lt;li&gt;&lt;img src="img2.jpg" alt="" /&gt;&lt;/li&gt;
+    &lt;li&gt;&lt;img src="img3.jpg" alt="" /&gt;&lt;/li&gt;
+&lt;/ul&gt;
+                            </pre>
+                        </li>
+
+                        <li>
+                            <h4>Call slider</h4>
+                            <p>Just before the closing <code>&lt;body&gt;</code> tag (after any JS file includes), call the slider with code below:</p>
+                            <pre class="brush: js; html-script: true">
+&lt;script&gt;
+    $('.rs-slider').refineSlide();
+&lt;/script&gt;
+                            </pre>
+                        </li>
+                        <li class="last-child">
+                            <h4>Take things further</h4>
+                            <p>See <a href="#tuning">tuning</a> for docs on changing options and adding links, captions and callbacks.</p>
+                        </li>
+                    </ol>
+                </li> <!-- /#installation -->
+
+                <li id="_tuning">
+                    <h2 class="subtitle">Tuning <span>Nitty-gritty setup</span></h2>
+                    <ol>
+                        <li>
+                            <h4>Linked slides</h4>
+                            <p>To make a slide into a link, just wrap the <code>&lt;img></code> inside an <code>&lt;a></code> and set the <code>href</code> attribute to the destination page.</p>
+                            <pre class="brush: html">
+&lt;ul class="rs-slider"&gt;
+    &lt;li&gt;
+        &lt;a href="#">
+            &lt;img src="img1.jpg" alt="" /&gt; <!-- This slide is clickable -->
+        &lt;/a>
+    &lt;/li&gt;
+&lt;/ul&gt;
+                            </pre>
+                        </li>
+
+                        <li>
+                            <h4>Captions</h4>
+                            <p>Captions are set by including <code>&lt;div class="rs-caption rs-bottom"></code> inside the slide <code>&lt;li></code>. Orientation can be altered by changing the direction class ('rs-bottom', 'rs-top', 'rs-left', 'rs-right', 'rs-bottom-left', 'rs-bottom-right', 'rs-top-left' or 'rs-top-right'). For example: <code>&lt;div class="rs-caption rs-right"></code>.</p>
+                            <pre class="brush: html">
+&lt;ul class="rs-slider"&gt;
+    &lt;li&gt;
+        &lt;img src="img1.jpg" alt="" /&gt;
+        &lt;div class="rs-caption rs-bottom">
+            <!-- HTML content here -->
+        &lt;/div>
+    &lt;/li&gt;
+&lt;/ul&gt;
+                            </pre>
+                            <p>Additionally, the width of captions can be adjusted using the <code>captionWidth</code> setting when calling the slider. Captions with 'top' and 'bottom' classes will be unaffected as they are full-width by design.</p>
+                        </li>
+
+                        <li>
+                            <h4>Adjusting settings</h4>
+                            <p>You'll likely want to have a tinker with the settings to get the slider set up for your needs. You can override default settings when calling the slider - as in the example below, where the slider is used as a slowly fading slideshow without any controls.</p>
+                            <pre class="brush: js; html-script: true">
+&lt;script&gt;
+    $('.rs-slider').refineSlide({
+        'transition'         : 'fade',
+        'transitionDuration' : 7000,
+        'autoPlay'           : true,
+        'keyNav'             : false,
+        'delay'              : 0,
+        'controls'           : null
+    });
+&lt;/script&gt;
+                            </pre>
+                            <p>Here's an exhaustive list of the plugin settings along with their defaults:</p>
+                            <pre class="brush: js">
+'transition'			: 'cubeV',	// String (default 'cubeV'): Transition type ('random', 'cubeH', 'cubeV', 'fade', 'sliceH', 'sliceV', 'slideH', 'slideV', 'scale', 'blockScale', 'kaleidoscope', 'fan', 'blindH', 'blindV')
+'fallback3d'			: 'sliceV',	// String (default 'sliceV'): Fallback for browsers that support transitions, but not 3d transforms (only used if primary transition makes use of 3d-transforms)
+'controls'				: 'thumbs',	// String (default 'thumbs'): Navigation type ('thumbs', 'arrows', null)
+'thumbMargin'			: 3,		// Int (default 3): Percentage width of thumb margin
+'autoPlay'				: false,	// Int (default false): Auto-cycle slider
+'delay'					: 5000,		// Int (default 5000) Time between slides in ms
+'transitionDuration'	: 800,		// Int (default 800): Transition length in ms
+'startSlide'			: 0,		// Int (default 0): First slide
+'keyNav'				: true,		// Bool (default true): Use left/right arrow keys to switch slide
+'captionWidth'			: 50,		// Int (default 50): Percentage of slide taken by caption
+'arrowTemplate'         : '<div class="rs-arrows"><a href="#" class="rs-prev"></a><a href="#" class="rs-next"></a></div>', // String: The markup used for arrow controls (if arrows are used). Must use classes '.rs-next' & '.rs-prev'
+'onInit'                : function () {}, // Func: User-defined, fires with slider initialisation
+'onChange'			    : function () {}, // Func: User-defined, fires with transition start
+'afterChange'			: function () {}  // Func: User-defined, fires after transition end
+                            </pre>
+                        </li>
+
+                        <li class="last-child">
+                            <h4>User-defined functions/callbacks</h4>
+                            <p>There are events where you can tie into the slider to extend/adjust functionality. <code>onInit()</code> - fires on slider initialisation, <code>onChange()</code> - fires at start of slide transition, <code>afterChange()</code> - fires after slide transition.</p>
+                            <p>To reference the slider object inside callbacks use <code>this.slider</code>. This enables you to access internal methods and properties. For example, calling <code>this.slider.next()</code> will advance to the next slide. Here's a list of props/methods you might find useful:</p>
+                            <pre class="brush: js">
+this.slider.$slider             // Elem: The slider elem ('.rs-slider')
+this.slider.$slides             // Elem Arr: Array of slide elems ('.rs-slider > li')
+this.slider.$sliderBG           // Elem: Slider wrap elem ('.rs-slide-bg')
+this.slider.$sliderWrap         // Elem: Outer wrap elem - wraps slider, thumbs, arrows ('.rs-wrap')
+this.slider.$currentSlide       // Elem: The current slide
+this.slider.$nextSlide          // Elem: The next slide (if one has been specified)
+this.slider.totalSlides         // Int: Number of slides
+this.slider.currentPlace        // Int: Index of current slide (starts at 0)
+this.slider.cssTransitions      // Bool: Whether browser supports CSS transitions
+this.slider.cssTransforms3d     // Bool: Whether browser supports 3D CSS transforms
+this.slider.inProgress          // Bool: Whether slider is mid-transition
+this.slider.settings            // Obj: The settings object (can access individual settings with e.g. - this.slider.settings['transition'])
+this.slider.next()              // Method: Call transition to next slide
+this.slider.prev()              // Method: Call transition to next slide
+this.slider.transition(slideNum);   // Method: Call a transition (param slideNum = int: array position of the new slide)
+                            </pre>
+                            <p>
+                                Below is a quick and dirty example use-case for these props/methods. <a href="/refineslide/demo-2.html">See here</a> for the live version.<br />
+                                Captions are extracted from the slider, added to an '#info' element and given an 'active' class when their slide is visible.
+                            </p>
+                            <pre class="brush: js; html-script: true">
+&lt;script&gt;
+    $('.rs-slider').refineSlide({
+        'onInit' : function () {
+            var i = this.slider.totalSlides;
+            while (i--) {
+                var $caption = $(this.slider.$slides[i]).find('div.rs-caption');
+
+                if (i === this.slider.currentPlace) $caption.addClass('active');
+
+                $caption.removeClass('rs-caption').attr('id', 'info-block-' + i).prependTo('#info');
+            }
+        },
+        'onChange' : function () {
+            $('#info').find('> div').removeClass('active');
+
+            $('#info').find('#info-block-'+ this.slider.currentPlace).addClass('active');
+        }
+    });
+&lt;/script&gt;
+                            </pre>
+                        </li>
+                    </ol>
+                </li> <!-- /#tuning -->
+
+                <li id="_faq">
+                    <h2 class="subtitle">FAQ <span>Shooting trouble</span></h2>
+                    <ul>
+                        <li>
+                            <h4>Can I see the different transitions somewhere?</h4>
+                            <p>Sure, there's a <a href="/refineslide/demo.html">demo page</a> that has them. (Please note that your browser may not support them all).</p>
+                        </li>
+
+                        <li>
+                            <h4>The slider isn't showing up!</h4>
+                            <p>Wow, OK, that's quite a problem there. Start by making sure that the slider CSS and JS files are linked and loading OK.<br />
+                            If that's all in order, please check your jQuery version - RefineSlide will only work with jQuery <strong>1.7 or later</strong> as it uses the <a href="http://blog.jquery.com/2011/11/03/jquery-1-7-released/">new event APIs</a>.</p>
+                            <p>Still no dice? Perhaps you have a conflicting plugin or stray CSS rules that are affecting the slider. Use your browser's developer tools to see what's up - if the slider <code>&lt;ul></code> is <strong>not</strong> wrapped by a <code>&lt;div class="rs-wrap"></code> in the generated markup then the plugin may not be called on the element correctly. Check for syntax errors in your slider call code.</p>
+                        </li>
+
+                        <li>
+                            <h4>HTML content instead of images?</h4>
+                            <p>Currently the slider is really only built for images. Displaying HTML content might be possible in a future version, though there would be a few things to workaround.<br />
+                            Grid-based transitions would be out (they rely upon background-image trickery), and getting responsive HTML content to behave predictably across slides can be tricky. Let me know if you have any ideas.</p>
+                            <p>FWIW, one potential workaround might be to just link the slider to an external caption area <a href="/refineslide/demo-2.html">similar to here</a>. Method quickly discussed in 'User-defined functions/callbacks,' <a href="#tuning">tuning</a>.</p>
+                        </li>
+
+                        <li class="last-child">
+                            <h4>I have great ideas/have discovered bugs - how should I let you know?</h4>
+                            <p>Awesome, bug-reports/ideas/feedback of all flavours is very welcome. Please consider contributing by forking the project on <a href="https://github.com/alexdunphy/refineslide">Github</a> or letting me know on <a href="https://twitter.com/#!/alexsdunphy">Twitter</a> about any ideas you have/bugs you encounter.</p>
+                        </li>
+                    </ul>
+                </li> <!-- /#faq -->
+
+                <li id="_about">
+                    <h2 class="subtitle">About <span>This and that</span></h2>
+                    <ul>
+                        <li>
+                            <h4>What's this all about then?</h4>
+                            <p>RefineSlide is a simple jQuery plugin for displaying responsive, image-based content (with shiny animations). CSS transitions are used wherever possible, which currently makes for varied performance across browsers and platforms. At the moment it's probably best to check it out in Safari, and will become much smoother elsewhere as other browsers move towards offloading CSS transitions to the GPU.</p>
+                        </li>
+                        <li>
+                            <h4>Future plans</h4>
+                            <ul class="reg-list">
+                                <li>Support sliding HTML content</li>
+                                <li>Support different image shapes/sizes in a single slider</li>
+                                <li>Increased support for user-defined callbacks</li>
+                                <li>Lite build version - including only user-specified transition(s)/functionality</li>
+                            </ul>
+                        </li>
+                        <li>
+                            <h4>Acknowledgements</h4>
+                            <ul class="reg-list">
+                                <li><a href="http://desandro.com/">David Desandro</a> & <a href="http://paulirish.com/">Paul Irish</a> for <a href="https://github.com/desandro/imagesloaded">imagesLoaded</a> - included in RefineSlide</li>
+                                <li><a href="http://blog.joelambert.co.uk/">Joe Lambert</a> for <a href="http://www.joelambert.co.uk/flux/">Flux Slider</a> - on which many RefineSlide transitions are based</li>
+                                <li><a href="https://twitter.com/#!/mbmufffin">Tyler Smith</a> for <a href="http://flex.madebymufffin.com/">Flex Slider</a> - a source of responsive inspiration</li>
+                                <li>The folks behind <a href="http://www.modernizr.com/">Modernizr</a> (Modernizr is used by RefineSlide if it's present)</li>
+                            </ul>
+                        </li>
+                        <li class="last-child">
+                            <h4>Changelog</h4>
+                            <ul id="changelog" class="reg-list">
+                                <li>
+                                    <strong>v0.1</strong> - 27/01/12<br />
+                                    Initial commit (beta release version)
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
+                </li> <!-- /#about -->
+            </ul> <!-- /#pages -->
+        </div> <!-- /.section-wrap -->
+    </div> <!-- /.wrap -->
+
+   	<div id="footer" class="wrap group">
+        <small id="copy">&copy; 2012 <a href="https://twitter.com/#!/alexsdunphy">Alex Dunphy</a> 2012</small>
+   	</div>
+
+    <script src="assets/js/jquery.js"></script>
+    <!--[if lt IE 8]>
+        <script src="assets/js/hashchange.js"></script>
+	<![endif]-->
+    <script src="assets/js/shCore.min.js"></script>
+    <script src="assets/js/shAutoloader.js"></script>
+    <script src="assets/js/jquery.refineslide.min.js"></script>
+    <script src="assets/js/footer.js"></script>
+</body>
+</html>

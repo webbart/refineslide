@@ -1,0 +1,128 @@
+<!doctype html>
+<!--[if IE 7]><html class="no-js lt-ie9 lt-ie8" lang="en"><![endif]-->
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en"><![endif]-->
+<!--[if gt IE 8]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+
+	<title>RefineSlide</title>
+
+	<link rel="stylesheet" href="assets/css/reset.css" />
+	<link rel="stylesheet" href="assets/css/main.css" />
+	<link rel="stylesheet" href="assets/css/refineslide.css" />
+	<link rel="stylesheet" href="assets/css/refineslide-theme-dark.css" />
+
+	<link rel="stylesheet" href="assets/css/shCore.css" />
+	<link rel="stylesheet" href="assets/css/shThemeDefault.css" />
+
+    <script src="http://use.typekit.com/tbq4amo.js"></script>
+    <script>try{Typekit.load();}catch(e){}</script>
+
+    <script src="assets/js/modernizr.js"></script>
+
+    <!--[if lt IE 9]>
+        <script src="assets/js/respond.min.js"></script>
+	<![endif]-->
+</head>
+<body>
+
+	<div class="topline"></div>
+
+	<div class="wrap group">
+        <div class="group">
+            <h1 class="title"><a href="/refineslide/">RefineSlide</a></h1>
+
+            <div id="top-buttons" class="group">
+                <a id="download" href="https://github.com/alexdunphy/refineslide/zipball/master">Download</a>
+                <a id="github" href="https://github.com/alexdunphy/refineslide">Github</a>
+            </div>
+        </div>
+    </div>
+
+    <div class="group section-wrap upper" id="upper">
+        <div class="wrap group">
+            <div class="section-1">
+                <div id="info"></div>
+            </div> <!-- /.section-1 -->
+
+            <div class="section-2 group">
+                <ul id="images" class="rs-slider">
+                    <li class="group">
+                        <a href="#">
+                            <img src="assets/img/wood6.jpg" alt="" />
+                        </a>
+                        <div class="rs-caption rs-bottom">
+                            <h2>Info Area 2</h2>
+                            <p class="first-of-type">Donec ullamcorper nulla non metus auctor fringilla. Maecenas sed diam eget risus varius blandit sit amet non magna. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus.</p>
+                            <p>Morbi leo risus, porta ac consectetur ac, vestibulum at eros. Nullam id dolor id nibh ultricies vehicula ut id elit. Integer posuere erat a ante venenatis dapibus posuere velit aliquet.</p>
+                        </div>
+                    </li>
+                    <li class="group">
+                        <a href="#">
+                            <img src="assets/img/greenbut.jpg" alt=""/>
+                        </a>
+                        <div class="rs-caption rs-bottom-right">
+                            <h2>Info Area 2</h2>
+                            <p class="first-of-type">Maecenas faucibus mollis interdum. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Donec sed odio dui.</p>
+                            <p>Donec id elit non mi porta gravida at eget metus. Nullam id dolor id nibh ultricies vehicula ut id elit. Maecenas faucibus mollis interdum.</p>
+                        </div>
+                    </li>
+                    <li class="group">
+                        <img src="assets/img/form.jpg" alt=""/>
+                        <div class="rs-caption rs-top-right">
+                            <h2>Info Area 3</h2>
+                            <p class="first-of-type">Curabitur blandit tempus porttitor. Cras mattis consectetur purus sit amet fermentum. Etiam porta sem malesuada magna mollis euismod.</p>
+                            <p>Etiam porta sem malesuada magna mollis euismod. Donec id elit non mi porta gravida at eget metus. Integer posuere erat a ante venenatis dapibus posuere velit aliquet.</p>
+                        </div>
+                    </li>
+                </ul>
+            </div> <!-- /.section-2 -->
+        </div> <!-- /.wrap -->
+    </div> <!-- /#upper -->
+
+   	<div id="footer" class="wrap group">
+           <small id="copy">&copy; 2012 <a href="https://twitter.com/#!/alexsdunphy">Alex Dunphy</a> 2012</small>
+   	</div>
+
+    <script src="assets/js/jquery.js"></script>
+    <!--[if lt IE 8]>
+        <script src="assets/js/hashchange.js"></script>
+	<![endif]-->
+    <script src="assets/js/shCore.min.js"></script>
+    <script src="assets/js/shAutoloader.js"></script>
+    <script src="assets/js/jquery.refineslide.min.js"></script>
+    <script>
+        $('#images').refineSlide({
+            'transition' : 'fade',
+            'onInit' : function () {
+                var i = this.slider.totalSlides;
+                while (i--) {
+                    var $caption = $(this.slider.$slides[i]).find('div.rs-caption').removeAttr('class');
+
+                    if (i === this.slider.currentPlace) $caption.addClass('active');
+
+                    $caption.attr('id', 'info-block-' + i).prependTo('#info');
+                }
+            },
+            'onChange' : function () {
+                $('#info').find('> div').removeClass('active');
+
+                $('#info').find('#info-block-'+ this.slider.currentPlace).addClass('active');
+            }
+        });
+
+        // iOS orientation scaling fix
+        if (navigator.userAgent.match(/iPhone/i) || navigator.userAgent.match(/iPad/i)) {
+            var viewportmeta = document.querySelectorAll('meta[name="viewport"]')[0];
+            if (viewportmeta) {
+                viewportmeta.content = 'width=device-width, minimum-scale=1.0, maximum-scale=1.0';
+                document.body.addEventListener('gesturestart', function () {
+                    viewportmeta.content = 'width=device-width, minimum-scale=0.25, maximum-scale=1.6';
+                }, false);
+            }
+        }
+    </script>
+</body>
+</html>

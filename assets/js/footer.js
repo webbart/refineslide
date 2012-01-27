@@ -7,6 +7,8 @@ function showPage(hash) {
         $page = $('#_'+ pageName), // Map window hash to underscored page ID (underscore ensures page ID is not found by browser, so no jumping)
         $nav = $('#nav').find('> ul > li > a'),
         pre = '';
+        
+    _gauges.push(['track']);
 
     $nav.removeClass('active');
     $($nav + '[href='+ hash +']').addClass('active');
@@ -20,7 +22,7 @@ function showPage(hash) {
 
     document.title = pre +'RefineSlide';
 
-    _gaq.push(['_trackPageview', '/' + hash]);
+    _gaq.push(['_trackPageview', '/'+ hash]);
 }
 
 $(window).on('hashchange', function() {

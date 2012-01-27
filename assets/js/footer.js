@@ -20,7 +20,7 @@ function showPage(hash) {
 
     document.title = pre +'RefineSlide';
 
-//    _gaq.push(['_trackPageview', '/' + hash]);
+    _gaq.push(['_trackPageview', '/' + hash]);
 }
 
 $(window).on('hashchange', function() {

@@ -157,18 +157,18 @@
         ,next: function () {
             // If on final slide, loop back to first slide
             if (this.currentPlace === this.totalSlides - 1) {
-                this.transition(0); // Call transition
+                this.transition(0, true); // Call transition
             } else {
-                this.transition(this.currentPlace + 1); // Call transition
+                this.transition(this.currentPlace + 1, true); // Call transition
             }
         }
 
         ,prev: function () {
             // If on first slide, loop round to final slide
             if (this.currentPlace == 0) {
-                this.transition(this.totalSlides - 1); // Call transition
+                this.transition(this.totalSlides - 1, false); // Call transition
             } else {
-                this.transition(this.currentPlace - 1); // Call transition
+                this.transition(this.currentPlace - 1, false); // Call transition
             }
         }
 
@@ -245,13 +245,15 @@
             });
         }
 
-        ,transition: function (slideNum) {
+        ,transition: function (slideNum, forward) {
             // If inProgress flag is not set (i.e. if not mid-transition)
             if (!this.inProgress) {
                 // If not already on requested slide
                 if (slideNum !== this.currentPlace) {
-                    // Check whether the requested slide index is ahead or behind in the array
-                    var forward = slideNum > this.currentPlace ? true : false;
+                    // Check whether the requested slide index is ahead or behind in the array (if not passed in as param)
+                    if(forward === undefined) {
+                    	forward = slideNum > this.currentPlace ? true : false;
+                    }
 
                     // Assign next slide prop (elem)
                     this.$nextSlide = $(this.$slides[slideNum]);
@@ -503,8 +505,6 @@
                 // Gridlet creator (divisions of the image grid, positioned with background-images to replicate the look of an entire slide image when assembled)
                 function gridlet(width, height, top, left, src, imgWidth, imgHeight, c, r) {
                     var delay = (c + r) * count;
-
-                    console.log((cols + rows) * count);
 
                     // Return a gridlet elem with styles for specific transition
                     return $('<div class="rs-gridlet" />').css({

@@ -164,7 +164,9 @@
                             <p>Just before the closing <code>&lt;body&gt;</code> tag (after any JS file includes), call the slider with code below:</p>
                             <pre class="brush: js; html-script: true">
 &lt;script&gt;
-    $('.rs-slider').refineSlide();
+	$(document).ready(function () {
+    	$('.rs-slider').refineSlide();
+	});
 &lt;/script&gt;
                             </pre>
                         </li>
@@ -213,32 +215,34 @@
                             <p>You'll likely want to have a tinker with the settings to get the slider set up for your needs. You can override default settings when calling the slider - as in the example below, where the slider is used as a slowly fading slideshow without any controls.</p>
                             <pre class="brush: js; html-script: true">
 &lt;script&gt;
-    $('.rs-slider').refineSlide({
-        'transition'         : 'fade',
-        'transitionDuration' : 7000,
-        'autoPlay'           : true,
-        'keyNav'             : false,
-        'delay'              : 0,
-        'controls'           : null
-    });
+	$(document).ready(function () {
+	    $('.rs-slider').refineSlide({
+	        transition         : 'fade',
+	        transitionDuration : 7000,
+	        autoPlay           : true,
+	        keyNav             : false,
+	        delay              : 0,
+	        controls           : null
+	    });
+	});
 &lt;/script&gt;
                             </pre>
                             <p>Here's an exhaustive list of the plugin settings along with their defaults:</p>
                             <pre class="brush: js">
-'transition'			: 'cubeV',	// String (default 'cubeV'): Transition type ('random', 'cubeH', 'cubeV', 'fade', 'sliceH', 'sliceV', 'slideH', 'slideV', 'scale', 'blockScale', 'kaleidoscope', 'fan', 'blindH', 'blindV')
-'fallback3d'			: 'sliceV',	// String (default 'sliceV'): Fallback for browsers that support transitions, but not 3d transforms (only used if primary transition makes use of 3d-transforms)
-'controls'				: 'thumbs',	// String (default 'thumbs'): Navigation type ('thumbs', 'arrows', null)
-'thumbMargin'			: 3,		// Int (default 3): Percentage width of thumb margin
-'autoPlay'				: false,	// Int (default false): Auto-cycle slider
-'delay'					: 5000,		// Int (default 5000) Time between slides in ms
-'transitionDuration'	: 800,		// Int (default 800): Transition length in ms
-'startSlide'			: 0,		// Int (default 0): First slide
-'keyNav'				: true,		// Bool (default true): Use left/right arrow keys to switch slide
-'captionWidth'			: 50,		// Int (default 50): Percentage of slide taken by caption
-'arrowTemplate'         : '<div class="rs-arrows"><a href="#" class="rs-prev"></a><a href="#" class="rs-next"></a></div>', // String: The markup used for arrow controls (if arrows are used). Must use classes '.rs-next' & '.rs-prev'
-'onInit'                : function () {}, // Func: User-defined, fires with slider initialisation
-'onChange'			    : function () {}, // Func: User-defined, fires with transition start
-'afterChange'			: function () {}  // Func: User-defined, fires after transition end
+transition            : 'cubeV',  // String (default 'cubeV'): Transition type ('random', 'cubeH', 'cubeV', 'fade', 'sliceH', 'sliceV', 'slideH', 'slideV', 'scale', 'blockScale', 'kaleidoscope', 'fan', 'blindH', 'blindV')
+fallback3d            : 'sliceV', // String (default 'sliceV'): Fallback for browsers that support transitions, but not 3d transforms (only used if primary transition makes use of 3d-transforms)
+controls              : 'thumbs', // String (default 'thumbs'): Navigation type ('thumbs', 'arrows', null)
+thumbMargin           : 3,        // Int (default 3): Percentage width of thumb margin
+autoPlay              : false,    // Int (default false): Auto-cycle slider
+delay                 : 5000,     // Int (default 5000) Time between slides in ms
+transitionDuration    : 800,      // Int (default 800): Transition length in ms
+startSlide            : 0,        // Int (default 0): First slide
+keyNav                : true,     // Bool (default true): Use left/right arrow keys to switch slide
+captionWidth          : 50,       // Int (default 50): Percentage of slide taken by caption
+arrowTemplate         : '&lt;div class="rs-arrows">&lt;a href="#" class="rs-prev">&lt;/a>&lt;a href="#" class="rs-next">&lt;/a>&lt;/div>', // String: The markup used for arrow controls (if arrows are used). Must use classes '.rs-next' & '.rs-prev'
+onInit                : function () {}, // Func: User-defined, fires with slider initialisation
+onChange              : function () {}, // Func: User-defined, fires with transition start
+afterChange           : function () {}  // Func: User-defined, fires after transition end
                             </pre>
                         </li>
 
@@ -269,23 +273,25 @@ this.slider.transition(slideNum);   // Method: Call a transition (param slideNum
                             </p>
                             <pre class="brush: js; html-script: true">
 &lt;script&gt;
-    $('.rs-slider').refineSlide({
-        'onInit' : function () {
-            var i = this.slider.totalSlides;
-            while (i--) {
-                var $caption = $(this.slider.$slides[i]).find('div.rs-caption');
-
-                if (i === this.slider.currentPlace) $caption.addClass('active');
-
-                $caption.removeClass('rs-caption').attr('id', 'info-block-' + i).prependTo('#info');
-            }
-        },
-        'onChange' : function () {
-            $('#info').find('> div').removeClass('active');
-
-            $('#info').find('#info-block-'+ this.slider.currentPlace).addClass('active');
-        }
-    });
+	$(document).ready(function () {
+	    $('.rs-slider').refineSlide({
+	        onInit : function () {
+	            var i = this.slider.totalSlides;
+	            while (i--) {
+	                var $caption = $(this.slider.$slides[i]).find('div.rs-caption');
+	
+	                if (i === this.slider.currentPlace) $caption.addClass('active');
+	
+	                $caption.removeClass('rs-caption').attr('id', 'info-block-' + i).prependTo('#info');
+	            }
+	        },
+	        onChange : function () {
+	            $('#info').find('> div').removeClass('active');
+	
+	            $('#info').find('#info-block-'+ this.slider.currentPlace).addClass('active');
+	        }
+	    });
+	});
 &lt;/script&gt;
                             </pre>
                         </li>
@@ -349,6 +355,13 @@ this.slider.transition(slideNum);   // Method: Call a transition (param slideNum
                         <li class="last-child">
                             <h4>Changelog</h4>
                             <ul id="changelog" class="reg-list">
+                            	<li>
+                            	    <strong>v0.2</strong> - 06/02/12<br />
+                            	    Fixed issue with slider not being given class ('.rs-slider')<br/>
+                            	    Removed quotes from properties<br />
+                            	    Added small timeout after cube transition setup - now cube transitions function in Firefox 10<br />
+                            	    Small bugfixes &amp; CSS formatting changes
+                            	</li>
                                 <li>
                                     <strong>v0.1</strong> - 27/01/12<br />
                                     Initial commit (beta release version)
@@ -369,9 +382,10 @@ this.slider.transition(slideNum);   // Method: Call a transition (param slideNum
     <!--[if lt IE 8]>
         <script src="assets/js/hashchange.js"></script>
 	<![endif]-->
+    <script src="assets/js/jquery.refineslide.min.js"></script>
     <script src="assets/js/shCore.min.js"></script>
     <script src="assets/js/shAutoloader.js"></script>
-    <script src="assets/js/jquery.refineslide.min.js"></script>
+    <script src="assets/js/ios-scaling-fix.js"></script>
     <script src="assets/js/footer.js"></script>
     <script>
       var _gauges = _gauges || [];

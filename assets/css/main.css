@@ -9,7 +9,7 @@ body {
     -webkit-tap-highlight-color: #74bd79;
     text-shadow: 0 1px 0 #fff;
     color: #4b4f57;
-    font-family: "proxima-nova", "Lucida Grande", "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-family: "proxima-nova", "ProximaNova-Regular", "Lucida Grande", "Helvetica Neue", Helvetica, Arial, sans-serif;
     font-size: 100%;
 }
 
@@ -103,7 +103,7 @@ h3,
 h4,
 h5,
 h6 {
-    font-family: "proxima-nova", "Lucida Grande", "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-family: "proxima-nova", "ProximaNova-Light", "Lucida Grande", "Helvetica Neue", Helvetica, Arial, sans-serif;
     font-weight: lighter;
 }
 
@@ -202,7 +202,6 @@ h1.title {
         -moz-box-shadow: none;
         -webkit-box-shadow: none;
         box-shadow: none;
-        -webkit-mask-image: url(../img/mask.png);
     }
 
 h1.title,

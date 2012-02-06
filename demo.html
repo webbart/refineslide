@@ -130,13 +130,11 @@
     <!--[if lt IE 8]>
         <script src="assets/js/hashchange.js"></script>
 	<![endif]-->
-    <script src="assets/js/shCore.min.js"></script>
-    <script src="assets/js/shAutoloader.js"></script>
     <script src="assets/js/jquery.refineslide.min.js"></script>
     <script>
         $('#images').refineSlide({
-            'transition' : 'fade',
-            'onInit' : function () {
+            transition : 'fade',
+            onInit : function () {
                 var slider = this.slider,
                    $triggers = $('.translist').find('> li > a');
 
@@ -165,20 +163,10 @@
                 support(this.slider.cssTransforms3d, '3d');
                 support(this.slider.cssTransitions, 'css');
             },
-            'controls' : 'arrows'
+            controls : 'arrows'
         });
-
-        // iOS orientation scaling fix
-        if (navigator.userAgent.match(/iPhone/i) || navigator.userAgent.match(/iPad/i)) {
-            var viewportmeta = document.querySelectorAll('meta[name="viewport"]')[0];
-            if (viewportmeta) {
-                viewportmeta.content = 'width=device-width, minimum-scale=1.0, maximum-scale=1.0';
-                document.body.addEventListener('gesturestart', function () {
-                    viewportmeta.content = 'width=device-width, minimum-scale=0.25, maximum-scale=1.6';
-                }, false);
-            }
-        }
     </script>
+    <script src="assets/js/ios-scaling-fix.js"></script>
     <script>
       var _gauges = _gauges || [];
       (function() {

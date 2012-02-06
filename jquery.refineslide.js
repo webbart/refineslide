@@ -1,11 +1,11 @@
 /*
- * jQuery RefineSlide plugin v0.1
+ * jQuery RefineSlide plugin v0.2
  * http://github.com/alexdunphy/refineslide
  * Requires: jQuery v1.7+
  * Copyright 2012, Alex Dunphy
  * MIT License (http://www.opensource.org/licenses/mit-license.php)
  *
- * Includes: jQuery imagesLoaded plugin v1.2.1
+ * Includes: jQuery imagesLoaded plugin v1.2.3
  * http://github.com/desandro/imagesloaded
  * MIT License. by Paul Irish et al.
  */
@@ -14,25 +14,25 @@
 
 	// Baked-in settings for extension
 	var defaults = {
-		'transition'            : 'cubeV',  // String (default 'cubeV'): Transition type ('random', 'cubeH', 'cubeV', 'fade', 'sliceH', 'sliceV', 'slideH', 'slideV', 'scale', 'blockScale', 'kaleidoscope', 'fan', 'blindH', 'blindV')
-		'fallback3d'            : 'sliceV', // String (default 'sliceV'): Fallback for browsers that support transitions, but not 3d transforms (only used if primary transition makes use of 3d-transforms)
-		'controls'              : 'thumbs', // String (default 'thumbs'): Navigation type ('thumbs', 'arrows', null)
-		'thumbMargin'           : 3,        // Int (default 3): Percentage width of thumb margin
-		'autoPlay'              : false,    // Int (default false): Auto-cycle slider
-		'delay'                 : 5000,     // Int (default 5000) Time between slides in ms
-		'transitionDuration'    : 800,      // Int (default 800): Transition length in ms
-		'startSlide'            : 0,        // Int (default 0): First slide
-		'keyNav'                : true,     // Bool (default true): Use left/right arrow keys to switch slide
-		'captionWidth'          : 50,       // Int (default 50): Percentage of slide taken by caption
-		'arrowTemplate'         : '<div class="rs-arrows"><a href="#" class="rs-prev"></a><a href="#" class="rs-next"></a></div>', // String: The markup used for arrow controls (if arrows are used). Must use classes '.rs-next' & '.rs-prev'
-		'onInit'                : function () {}, // Func: User-defined, fires with slider initialisation
-		'onChange'              : function () {}, // Func: User-defined, fires with transition start
-		'afterChange'           : function () {}  // Func: User-defined, fires after transition end
+		transition            : 'cubeV',  // String (default 'cubeV'): Transition type ('random', 'cubeH', 'cubeV', 'fade', 'sliceH', 'sliceV', 'slideH', 'slideV', 'scale', 'blockScale', 'kaleidoscope', 'fan', 'blindH', 'blindV')
+		fallback3d            : 'sliceV', // String (default 'sliceV'): Fallback for browsers that support transitions, but not 3d transforms (only used if primary transition makes use of 3d-transforms)
+		controls              : 'thumbs', // String (default 'thumbs'): Navigation type ('thumbs', 'arrows', null)
+		thumbMargin           : 3,        // Int (default 3): Percentage width of thumb margin
+		autoPlay              : false,    // Int (default false): Auto-cycle slider
+		delay                 : 5000,     // Int (default 5000) Time between slides in ms
+		transitionDuration    : 800,      // Int (default 800): Transition length in ms
+		startSlide            : 0,        // Int (default 0): First slide
+		keyNav                : true,     // Bool (default true): Use left/right arrow keys to switch slide
+		captionWidth          : 50,       // Int (default 50): Percentage of slide taken by caption
+		arrowTemplate         : '<div class="rs-arrows"><a href="#" class="rs-prev"></a><a href="#" class="rs-next"></a></div>', // String: The markup used for arrow controls (if arrows are used). Must use classes '.rs-next' & '.rs-prev'
+		onInit                : function () {}, // Func: User-defined, fires with slider initialisation
+		onChange              : function () {}, // Func: User-defined, fires with transition start
+		afterChange           : function () {}  // Func: User-defined, fires after transition end
 	};
 
 	// RS (RefineSlide) object constructor
 	function RS(elem, settings) {
-		this.$slider            = $(elem);                             // Elem: Slider element
+		this.$slider            = $(elem).addClass('rs-slider');      // Elem: Slider element
 		this.settings           = $.extend({}, defaults, settings);    // Obj: Merged user settings/defaults
 		this.$slides            = this.$slider.find('> li');           // Elem Arr: Slide elements
 		this.totalSlides        = this.$slides.length;                 // Int: Number of slides
@@ -323,7 +323,7 @@
                 var transition = this.setup();
                 setTimeout(function () {
                     callback(transition);
-                }, 0);
+                }, 40);
             } else {
                 // Transition execution
                 this.execute();
@@ -728,14 +728,15 @@
      * David Desandro's imagesloaded plugin is included here as a cross-browser way to ensure all images have loaded before slider setup (e.g. testing for image dimensions)
      * Another reliable method would be to wait until the window.load event before setup - though that could cause considerable delays on certain pages
      *
-     * jQuery imagesLoaded plugin v1.2.1
+     * jQuery imagesLoaded plugin v1.2.3
      * http://github.com/desandro/imagesloaded
      *
      * MIT License. by Paul Irish et al.
      */
     $.fn.imagesLoaded = function( callback ) {
     	var $this = this,
-    		deferred = $.Deferred(),
+    		deferred = $.isFunction($.Deferred) ? $.Deferred() : 0,
+    		hasNotify = $.isFunction(deferred.notify),
     		$images = $this.find('img').add( $this.filter('img') ),
     		len = $images.length,
     		blank = 'data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///ywAAAAAAQABAAACAUwAOw==',
@@ -747,13 +748,17 @@
     		var $proper = $(proper),
     			$broken = $(broken);
 
-    		if ( broken.length ) {
-    			deferred.reject( $images, $proper, $broken );
-    		} else {
-    			deferred.resolve( $images );
+    		if ( deferred ) {
+    			if ( broken.length ) {
+    				deferred.reject( $images, $proper, $broken );
+    			} else {
+    				deferred.resolve( $images );
+    			}
     		}
 
-    		callback.call( $this, $images, $proper, $broken );
+    		if ( $.isFunction( callback ) ) {
+    			callback.call( $this, $images, $proper, $broken );
+    		}
     	}
 
     	function imgLoaded( event ) {
@@ -762,7 +767,9 @@
     			return;
     		}
 
+    		// store element in loaded images array
     		loaded.push( this );
+
     		// keep track of broken and properly loaded images
     		if ( event.type === 'error' ) {
     			broken.push( this );
@@ -770,7 +777,12 @@
     			proper.push( this );
     		}
 
-    		deferred.notify( $images.length, loaded.length, proper.length, broken.length );
+    		// cache event type in element data for future calls
+    		$.data( this, 'imagesLoaded', event.type );
+
+    		if ( hasNotify ) {
+    			deferred.notify( $images.length, loaded.length, proper.length, broken.length );
+    		}
 
     		if ( --len <= 0 ){
     			setTimeout( doneLoading );
@@ -784,6 +796,13 @@
     	}
 
     	$images.bind( 'load.imagesLoaded error.imagesLoaded', imgLoaded ).each( function() {
+    		// find out if this image has been already checked for status
+    		var cachedEvent = $.data( this, 'imagesLoaded' );
+    		// if it was, trigger the corresponding event and finish
+    		if ( cachedEvent ) {
+    			$(this).triggerHandler( cachedEvent );
+    			return;
+    		}
     		// cached images don't fire load sometimes, so we reset src.
     		var src = this.src;
     		// webkit hack from http://groups.google.com/group/jquery-dev/browse_thread/thread/eee6ab7b2da50e1f
@@ -792,7 +811,7 @@
     		this.src = src;
     	});
 
-    	return deferred.promise( $this );
+    	return deferred ? deferred.promise( $this ) : $this;
     };
 
 	// jQuery plugin wrapper

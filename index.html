@@ -348,13 +348,18 @@ this.slider.transition(slideNum);   // Method: Call a transition (param slideNum
                             <ul class="reg-list">
                                 <li><a href="http://desandro.com/">David Desandro</a> & <a href="http://paulirish.com/">Paul Irish</a> for <a href="https://github.com/desandro/imagesloaded">imagesLoaded</a> - included in RefineSlide</li>
                                 <li><a href="http://blog.joelambert.co.uk/">Joe Lambert</a> for <a href="http://www.joelambert.co.uk/flux/">Flux Slider</a> - on which many RefineSlide transitions are based</li>
-                                <li><a href="https://twitter.com/#!/mbmufffin">Tyler Smith</a> for <a href="http://flex.madebymufffin.com/">Flex Slider</a> - a source of responsive inspiration</li>
+                                <li><a href="https://twitter.com/#!/mbmufffin">Tyler Smith</a> for <a href="http://flex.madebymufffin.com/">Flex Slider</a> - responsive inspiration</li>
                                 <li>The folks behind <a href="http://www.modernizr.com/">Modernizr</a> (Modernizr is used by RefineSlide if it's present)</li>
                             </ul>
                         </li>
                         <li class="last-child">
                             <h4>Changelog</h4>
                             <ul id="changelog" class="reg-list">
+                                <li>
+                                    <strong>v0.3</strong> - 01/03/12<br />
+                                    Condensed jQuery .on()/.of() calls to .one()<br/>
+                                    Bumped packaged <a href="https://github.com/desandro/imagesloaded">imagesLoaded</a> plugin to v2.0.1<br />
+                                </li>
                             	<li>
                             	    <strong>v0.2</strong> - 06/02/12<br />
                             	    Fixed issue with slider not being given class ('.rs-slider')<br/>
@@ -385,7 +390,7 @@ this.slider.transition(slideNum);   // Method: Call a transition (param slideNum
     <script src="assets/js/jquery.refineslide.min.js"></script>
     <script src="assets/js/shCore.min.js"></script>
     <script src="assets/js/shAutoloader.js"></script>
-    <script src="assets/js/ios-scaling-fix.js"></script>
+    <script src="assets/js/ios-orientation-change-fix.js"></script>
     <script src="assets/js/footer.js"></script>
     <script>
       var _gauges = _gauges || [];

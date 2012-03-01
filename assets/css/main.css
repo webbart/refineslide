@@ -275,7 +275,7 @@ h1.title,
     #upper .section-1 { border-bottom-color: #000 }
 
     #upper .button {
-        color: #dbdbdb;
+        color: #fff;
         text-shadow: 0 -1px 0 #000;
         padding: 4px 5px 5px;
         display: inline-block;
@@ -296,7 +296,6 @@ h1.title,
     }
 
     #upper .button:hover {
-        color: #fff;
         border: 1px solid #2e3133;
         border: 1px solid rgba(0, 0, 0, .3);
         border-bottom: 1px solid rgba(0, 0, 0, .45);
@@ -574,11 +573,11 @@ h1.title,
 /* ===[ Demo 2 Page ]=== */
 
 #info > div {
-    -webkit-transform: translateY(100px);
-    -moz-transform: translateX(100px);
-    -o-transform: translateX(100px);
-    -ms-transform: translateX(100px);
-    transform: translateX(100px);
+    -webkit-transform: none;
+    -moz-transform: none;
+    -o-transform: none;
+    -ms-transform: none;
+    transform: none;
 }
 
 #info > div p {

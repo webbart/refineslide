@@ -1,11 +1,11 @@
 /*
- * jQuery RefineSlide plugin v0.2
+ * jQuery RefineSlide plugin v0.3
  * http://github.com/alexdunphy/refineslide
  * Requires: jQuery v1.7+
  * Copyright 2012, Alex Dunphy
  * MIT License (http://www.opensource.org/licenses/mit-license.php)
  *
- * Includes: jQuery imagesLoaded plugin v1.2.3
+ * Includes: jQuery imagesLoaded plugin v2.0.1
  * http://github.com/desandro/imagesloaded
  * MIT License. by Paul Irish et al.
  */
@@ -331,7 +331,7 @@
 
             // Listen for CSS transition end on elem (set by transition)
             if (this.RS.cssTransitions) {
-                $(this.listenTo).on('webkitTransitionEnd transitionend oTransitionEnd msTransitionend MSTransitionEnd', function () {
+                $(this.listenTo).one('webkitTransitionEnd transitionend oTransitionEnd msTransitionend MSTransitionEnd', function () {
                     // Post-transition reset
                     _this.after();
                 });
@@ -346,9 +346,6 @@
 
             // Additional reset steps required by transition (if any exist)
             if (typeof this.reset === 'function') this.reset();
-
-            // Remove event listener for CSS transition end (elem varies by transition)
-            $(this.listenTo).off('webkitTransitionEnd transitionend oTransitionEnd msTransitionend MSTransitionEnd');
 
             // If slideshow is active, reset the timeout
             if (this.RS.settings['autoPlay']) {
@@ -728,90 +725,107 @@
      * David Desandro's imagesloaded plugin is included here as a cross-browser way to ensure all images have loaded before slider setup (e.g. testing for image dimensions)
      * Another reliable method would be to wait until the window.load event before setup - though that could cause considerable delays on certain pages
      *
-     * jQuery imagesLoaded plugin v1.2.3
+     * jQuery imagesLoaded plugin v2.0.1
      * http://github.com/desandro/imagesloaded
      *
      * MIT License. by Paul Irish et al.
      */
+    // blank image data-uri bypasses webkit log warning (thx doug jones)
+    var BLANK = 'data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///ywAAAAAAQABAAACAUwAOw==';
+
     $.fn.imagesLoaded = function( callback ) {
-    	var $this = this,
-    		deferred = $.isFunction($.Deferred) ? $.Deferred() : 0,
-    		hasNotify = $.isFunction(deferred.notify),
-    		$images = $this.find('img').add( $this.filter('img') ),
-    		len = $images.length,
-    		blank = 'data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///ywAAAAAAQABAAACAUwAOw==',
-    		loaded = [],
-    		proper = [],
-    		broken = [];
+        var $this = this,
+            deferred = $.isFunction($.Deferred) ? $.Deferred() : 0,
+            hasNotify = $.isFunction(deferred.notify),
+            $images = $this.find('img').add( $this.filter('img') ),
+            loaded = [],
+            proper = [],
+            broken = [];
 
-    	function doneLoading() {
-    		var $proper = $(proper),
-    			$broken = $(broken);
+        function doneLoading() {
+            var $proper = $(proper),
+                $broken = $(broken);
 
-    		if ( deferred ) {
-    			if ( broken.length ) {
-    				deferred.reject( $images, $proper, $broken );
-    			} else {
-    				deferred.resolve( $images );
-    			}
-    		}
+            if ( deferred ) {
+                if ( broken.length ) {
+                    deferred.reject( $images, $proper, $broken );
+                } else {
+                    deferred.resolve( $images );
+                }
+            }
 
-    		if ( $.isFunction( callback ) ) {
-    			callback.call( $this, $images, $proper, $broken );
-    		}
-    	}
+            if ( $.isFunction( callback ) ) {
+                callback.call( $this, $images, $proper, $broken );
+            }
+        }
 
-    	function imgLoaded( event ) {
-    		// dont proceed if img src is blank or if img is already loaded
-    		if ( event.target.src === blank || $.inArray( this, loaded ) !== -1 ) {
-    			return;
-    		}
+        function imgLoaded( img, isBroken ) {
+            // don't proceed if BLANK image, or image is already loaded
+            if ( img.src === BLANK || $.inArray( img, loaded ) !== -1 ) {
+                return;
+            }
 
-    		// store element in loaded images array
-    		loaded.push( this );
+            // store element in loaded images array
+            loaded.push( img );
 
-    		// keep track of broken and properly loaded images
-    		if ( event.type === 'error' ) {
-    			broken.push( this );
-    		} else {
-    			proper.push( this );
-    		}
+            // keep track of broken and properly loaded images
+            if ( isBroken ) {
+                broken.push( img );
+            } else {
+                proper.push( img );
+            }
 
-    		// cache event type in element data for future calls
-    		$.data( this, 'imagesLoaded', event.type );
+            // cache image and its state for future calls
+            $.data( img, 'imagesLoaded', { isBroken: isBroken, src: img.src } );
 
-    		if ( hasNotify ) {
-    			deferred.notify( $images.length, loaded.length, proper.length, broken.length );
-    		}
+            // trigger deferred progress method if present
+            if ( hasNotify ) {
+                deferred.notifyWith( $(img), [ isBroken, $images, $(proper), $(broken) ] );
+            }
 
-    		if ( --len <= 0 ){
-    			setTimeout( doneLoading );
-    			$images.unbind( '.imagesLoaded', imgLoaded );
-    		}
-    	}
+            // call doneLoading and clean listeners if all images are loaded
+            if ( $images.length === loaded.length ){
+                setTimeout( doneLoading );
+                $images.unbind( '.imagesLoaded' );
+            }
+        }
 
-    	// if no images, trigger immediately
-    	if ( !len ) {
-    		doneLoading();
-    	}
+        // if no images, trigger immediately
+        if ( !$images.length ) {
+            doneLoading();
+        } else {
+            $images.bind( 'load.imagesLoaded error.imagesLoaded', function( event ){
+                // trigger imgLoaded
+                imgLoaded( event.target, event.type === 'error' );
+            }).each( function( i, el ) {
+                    var src = el.src;
 
-    	$images.bind( 'load.imagesLoaded error.imagesLoaded', imgLoaded ).each( function() {
-    		// find out if this image has been already checked for status
-    		var cachedEvent = $.data( this, 'imagesLoaded' );
-    		// if it was, trigger the corresponding event and finish
-    		if ( cachedEvent ) {
-    			$(this).triggerHandler( cachedEvent );
-    			return;
-    		}
-    		// cached images don't fire load sometimes, so we reset src.
-    		var src = this.src;
-    		// webkit hack from http://groups.google.com/group/jquery-dev/browse_thread/thread/eee6ab7b2da50e1f
-    		// data uri bypasses webkit log warning (thx doug jones)
-    		this.src = blank;
-    		this.src = src;
-    	});
+                    // find out if this image has been already checked for status
+                    // if it was, and src has not changed, call imgLoaded on it
+                    var cached = $.data( el, 'imagesLoaded' );
+                    if ( cached && cached.src === src ) {
+                        imgLoaded( el, cached.isBroken );
+                        return;
+                    }
 
-    	return deferred ? deferred.promise( $this ) : $this;
+                    // if complete is true and browser supports natural sizes, try
+                    // to check for image status manually
+                    if ( el.complete && el.naturalWidth !== undefined ) {
+                        imgLoaded( el, el.naturalWidth === 0 || el.naturalHeight === 0 );
+                        return;
+                    }
+
+                    // cached images don't fire load sometimes, so we reset src, but only when
+                    // dealing with IE, or image is complete (loaded) and failed manual check
+                    // webkit hack from http://groups.google.com/group/jquery-dev/browse_thread/thread/eee6ab7b2da50e1f
+                    if ( el.readyState || el.complete ) {
+                        el.src = BLANK;
+                        el.src = src;
+                    }
+                });
+        }
+
+        return deferred ? deferred.promise( $this ) : $this;
     };
 
 	// jQuery plugin wrapper

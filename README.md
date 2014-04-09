@@ -3,7 +3,7 @@ jQuery RefineSlide v0.3
 
 RefineSlide is a 3D transform/CSS transition-enabled jQuery plugin for displaying responsive, image-based content.
 
-Check out the [project page](http://alexdunphy.github.com/refineslide/) for documentation & examples
+Check out the [project page](http://webbart.github.com/refineslide/) for documentation & examples
 
 Requirements
 -----
